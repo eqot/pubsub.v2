@@ -1,0 +1,12 @@
+{
+  "name": "pubsub2",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "socket.io": "~0.9.14",
+    "socket.io-client": "~0.9.11"
+  }
+}
