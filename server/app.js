@@ -4,18 +4,18 @@ var pubsub = require('./client').pubsub;
 // console.log(pubsub);
 
 var io = require('socket.io').listen(pubsub.PORT);
-var sioclient = require('socket.io-client');
-var widgetScript = require('fs').readFileSync('server/client.js');
+var ioClient = require('socket.io-client');
+var clientScript = require('fs').readFileSync('server/client.js');
 
 io.configure(function () {
     io.set('resource', '/' + pubsub.RESOURCE);
     io.enable('browser client gzip');
 });
 
-sioclient.builder(io.transports(), function (err, siojs) {
+ioClient.builder(io.transports(), function (err, siojs) {
     if (!err) {
         io.static.add('/' + pubsub.SCRIPT, function (path, callback) {
-            callback(null, new Buffer(siojs + ';' + widgetScript));
+            callback(null, new Buffer(siojs + ';' + clientScript));
         });
     }
 });
