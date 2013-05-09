@@ -6,7 +6,6 @@ var pubsub = require('./client').pubsub;
 var io = require('socket.io').listen(pubsub.PORT);
 var sioclient = require('socket.io-client');
 var widgetScript = require('fs').readFileSync('server/client.js');
-var url = require('url');
 
 io.configure(function () {
     io.set('resource', '/' + pubsub.RESOURCE);
