@@ -5,7 +5,7 @@
 var pubsub = {
     // Url for client script is http://<HOST>:<PORT>/<RESOURCE>/<SCRIPT>
     HOST: 'localhost',
-    PORT: 9000,
+    PORT: 9001,
     RESOURCE: 'pubsub',
     SCRIPT: 'client.js',
 
