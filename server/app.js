@@ -8,6 +8,7 @@ var ioClient = require('socket.io-client');
 var clientScript = require('fs').readFileSync(__dirname + '/client.js');
 
 io.configure(function () {
+    io.set('log level', 1);
     io.set('resource', '/' + pubsub.RESOURCE);
     io.enable('browser client gzip');
 });
