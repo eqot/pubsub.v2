@@ -1,7 +1,8 @@
 'use strict';
 
+var url = require('url');
+
 var pubsub = require('./client').pubsub;
-// console.log(pubsub);
 
 var io = require('socket.io').listen(pubsub.PORT);
 var ioClient = require('socket.io-client');
@@ -21,8 +22,23 @@ ioClient.builder(io.transports(), function (err, siojs) {
     }
 });
 
+var ids = [];
+
 io.sockets.on('connection', function (socket) {
     // console.log('Connected');
+
+    var origin = (socket.handshake.xdomain) ?
+        url.parse(socket.handshake.headers.origin).hostname : 'local';
+    var id = origin || 'local';
+    // console.log(id);
+
+    var index = ids.indexOf(id);
+    if (index === -1) {
+        ids.push(id);
+        index = ids.indexOf(id);
+    }
+    // console.log(ids);
+    // console.log(index);
 
     socket.on(pubsub.Message.SUBSCRIBE, function (group) {
         // console.log('Subscribed: ' + group);
@@ -35,7 +51,17 @@ io.sockets.on('connection', function (socket) {
     });
 
     socket.on(pubsub.Message.PUBLISH, function (message) {
+        message._index = index;
         // console.log(message);
         io.sockets.to(message.group).emit(pubsub.Message.RECEIVE, message.content);
+    });
+
+    socket.on('disconnect', function () {
+        // console.log('disconnect: ' + id);
+        index = ids.indexOf(id);
+        if (index !== -1) {
+            ids.splice(index, 1);
+        }
+        // console.log(ids);
     });
 });
