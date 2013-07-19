@@ -1,3 +1,7 @@
+/*global pubsub */
+
+'use strict';
+
 function main() {
     var group = 'dummy';
 
