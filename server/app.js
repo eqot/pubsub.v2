@@ -4,7 +4,7 @@ var url = require('url');
 
 var pubsub = require('./client').pubsub;
 
-var io = require('socket.io').listen(pubsub.PORT);
+var io = require('socket.io').listen(process.env.PORT || pubsub.PORT);
 var ioClient = require('socket.io-client');
 var clientScript = require('fs').readFileSync(__dirname + '/client.js');
 
