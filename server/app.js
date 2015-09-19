@@ -51,7 +51,7 @@ io.sockets.on('connection', function (socket) {
     });
 
     socket.on(pubsub.Message.PUBLISH, function (message) {
-        message.content._index = index;
+        // message.content._index = index;
         // console.log(message);
         io.sockets.to(message.group).emit(pubsub.Message.RECEIVE, message.content);
     });
